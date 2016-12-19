@@ -2,11 +2,11 @@
   "images" : [
     {
       "idiom" : "universal",
-      "filename" : "fire-jenkins.png",
       "scale" : "1x"
     },
     {
       "idiom" : "universal",
+      "filename" : "fire-jenkins.png",
       "scale" : "2x"
     },
     {
