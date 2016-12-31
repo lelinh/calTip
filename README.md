@@ -27,9 +27,10 @@ The following **additional** features are implemented:
 
 Here's a walkthrough of implemented user stories:
 
-<blockquote class="imgur-embed-pub" lang="en" data-id="a/pK2d7"><a href="http://imgur.com/a/pK2d7">TipCal Demo</a></blockquote><script async src="//s.imgur.com/min/embed.js" charset="utf-8"></script>
+<img src='http://imgur.com/iQ41Akt' title='Video Walkthrough' width='' alt='Video Walkthrough' />
+
 <img src='http://imgur.com/a/pK2d7' title='Video Walkthrough' width='' alt='Video Walkthrough' />
-![](http://imgur.com/a/pK2d7)
+![](http://imgur.com/iQ41Akt)
 
 GIF created with [LiceCap](http://www.cockos.com/licecap/).
 
