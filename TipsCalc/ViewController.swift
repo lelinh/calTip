@@ -18,7 +18,7 @@ class ViewController: UIViewController {
     @IBOutlet weak var waiterImage: UIImageView!
     @IBOutlet weak var RestaurantLabel: UITextField!
     
-    var bill = 0
+    var bill = 0.0
     var tip = 0.0
     var total =  0.0
     var tipPercentage = [0.05,0.1,0.2]
@@ -62,12 +62,12 @@ class ViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
+        // Remain the last bill info.
         loadSession()
         loadBillNumber()
         updateImage()
         //Use numberPad to input the bill
-        BillLabel.keyboardType = UIKeyboardType.numberPad //numberPad
+        BillLabel.keyboardType = UIKeyboardType.decimalPad //numberPad
     }
     override func viewDidAppear(_ animated: Bool) {
         
@@ -93,7 +93,7 @@ class ViewController: UIViewController {
     
     func calcTip() {
         tipPercent = tipPercentage[tipPercentSegment.selectedSegmentIndex]
-        bill = Int(BillLabel.text!) ?? 0
+        bill = Double(BillLabel.text!) ?? 0.0
         tip = Double(bill) * tipPercent
         total = tip + Double(bill)
         saveSession()
@@ -130,12 +130,12 @@ class ViewController: UIViewController {
         billNumberLabel.text = "No. \(billNumber)"
     }
     func loadSession(){
-        bill = defaults.integer(forKey: "TipCalculate.RemainLastBill")
+        bill = defaults.double(forKey: "TipCalculate.RemainLastBill")
         restaurant = defaults.string(forKey: "TipCalculate.RemainLastRestaurant") ?? "Unknown"
         tip = defaults.double(forKey: "TipCalculate.RemainLastTip")
         total = defaults.double(forKey: "TipCalculate.RemainLastTotal")
         
-        if bill == 0 {BillLabel.text = ""}else{BillLabel.text = String(bill)}
+        if bill == 0 {BillLabel.text = ""}else{/*BillLabel.text = String(bill)*/}
         TipLabel.text = String(utilities.numberToCurrency(tip))
         TotalLabel.text = String(utilities.numberToCurrency(total))
         RestaurantLabel.text = restaurant
@@ -155,11 +155,20 @@ class ViewController: UIViewController {
             log.warning("over load!!")
             BillLabel.deleteBackward()
         }
+        //check 0 leading
         if (BillLabel.text!) == "0"{
             BillLabel.deleteBackward()
             TipLabel.text = utilities.numberToCurrency(0)
             TotalLabel.text = utilities.numberToCurrency(0)
         }
+        //check decimal trailing
+//        let billInput = Double(BillLabel.text!) ?? 0
+//        log.info(String(billInput)+" "+String(Double(round(billInput*100)/100)))
+//        if(billInput != (Double(round(billInput*100)/100))){
+//            log.info("delete 3rd decimal")
+//            BillLabel.deleteBackward()
+//        }
+        
     }
 
 }
