@@ -236,7 +236,7 @@
                         <subviews>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="Image" id="vr7-D5-rpL">
                                 <rect key="frame" x="18.5" y="240" width="282.5" height="279"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                             </imageView>
                             <pickerView contentMode="scaleToFill" misplaced="YES" id="Pke-pN-J0A">
                                 <rect key="frame" x="0.0" y="139.5" width="320" height="75"/>
@@ -256,6 +256,7 @@
                     <connections>
                         <outlet property="TipPercentPicker" destination="Pke-pN-J0A" id="chM-Q8-aRw"/>
                         <outlet property="TipRate" destination="DoW-wT-juh" id="I6m-nF-2QV"/>
+                        <outlet property="settingImage" destination="vr7-D5-rpL" id="Beh-lc-1ZH"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="eP5-6X-e66" userLabel="First Responder" sceneMemberID="firstResponder"/>

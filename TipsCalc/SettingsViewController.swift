@@ -14,12 +14,14 @@ class SettingsViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
 
     @IBOutlet weak var TipRate: UILabel!
     @IBOutlet weak var TipPercentPicker: UIPickerView!
+    @IBOutlet weak var settingImage: UIImageView!
     
     let defaults = UserDefaults.standard
     var pickerData = [[String]()]
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        settingImage.center.x = settingImage.center.x  + self.view.frame.width
         // Connect data:
         self.TipPercentPicker.delegate = self
         self.TipPercentPicker.dataSource = self
@@ -36,6 +38,28 @@ class SettingsViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
         TipPercentPicker.selectRow(option1, inComponent: 0, animated: true)
         TipPercentPicker.selectRow(option2, inComponent: 1, animated: true)
         TipPercentPicker.selectRow(option3, inComponent: 2, animated: true)
+    }
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        
+    }
+    override func viewDidAppear(_ animated: Bool) {
+
+        UIView.animate(withDuration: 0.3, delay:0,animations:{() -> Void in
+            self.settingImage.center.x = self.settingImage.center.x  - self.view.frame.width * 1.3
+        }){
+            (_) in
+            
+            UIView.animate(withDuration: 0.3, delay:0,animations:{() -> Void in
+                self.settingImage.center.x = self.settingImage.center.x  + self.view.frame.width * 0.3
+            })
+        }
+    }
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        UIView.animate(withDuration: 0.3, animations:{() -> Void in
+            self.settingImage.center.x = self.settingImage.center.x  + self.view.frame.width
+        })
     }
 
     override func didReceiveMemoryWarning() {
