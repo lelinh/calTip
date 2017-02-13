@@ -33,4 +33,17 @@ class utilities {
         currencyFormatter.locale = NSLocale.current
         return currencyFormatter.string(from: NSNumber(value: number))!
     }
+    static func getTime() -> Double{
+        let date = Date()
+        let calendar = Calendar.current
+        
+        let year = calendar.component(.year, from: date)
+        let month = calendar.component(.month, from: date)
+        let day = calendar.component(.day, from: date)
+        let hour = calendar.component(.hour, from: date)
+        let minutes = calendar.component(.minute, from: date)
+        let seconds = calendar.component(.second, from: date)
+        let time = ("\(year)\(month)\(day)\(hour)\(minutes)\(seconds)")
+        return Double(time)!
+    }
 }

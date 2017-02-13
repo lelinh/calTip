@@ -12,9 +12,7 @@ class SettingsViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
 
     //let log = LinhLog()
 
-    @IBOutlet weak var option1: UILabel!
-    @IBOutlet weak var option2: UILabel!
-    @IBOutlet weak var option3: UILabel!
+    @IBOutlet weak var TipRate: UILabel!
     @IBOutlet weak var TipPercentPicker: UIPickerView!
     
     let defaults = UserDefaults.standard

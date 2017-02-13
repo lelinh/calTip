@@ -68,9 +68,14 @@ class ViewController: UIViewController {
         updateImage()
         //Use numberPad to input the bill
         BillLabel.keyboardType = UIKeyboardType.decimalPad //numberPad
+        BillLabel.becomeFirstResponder()
+        let notificationCenter = NotificationCenter.default
+        notificationCenter.addObserver(self, selector: #selector(appMoveToBackground), name: Notification.Name.UIApplicationWillResignActive, object: nil)
+        notificationCenter.addObserver(self, selector: #selector(appMoveToForeground), name: Notification.Name.UIApplicationWillEnterForeground, object: nil)
+
+
     }
     override func viewDidAppear(_ animated: Bool) {
-        
         //Re load bill number
         loadBillNumber()
         //Re load tip percentages
@@ -84,6 +89,8 @@ class ViewController: UIViewController {
         //re-calculate bill
         calcTip()
 
+    }
+    override func viewDidDisappear(_ animated: Bool) {
     }
     
     override func didReceiveMemoryWarning() {
@@ -124,6 +131,14 @@ class ViewController: UIViewController {
         defaults.set(tip, forKey: "TipCalculate.RemainLastTip")
         defaults.set(total, forKey: "TipCalculate.RemainLastTotal")
     }
+    func clearSession(){
+        log.info("clear session")
+        defaults.set("", forKey: "TipCalculate.RemainLastBill")
+        defaults.set("", forKey: "TipCalculate.RemainLastRestaurant")
+        defaults.set("", forKey: "TipCalculate.RemainLastTip")
+        defaults.set("", forKey: "TipCalculate.RemainLastTotal")
+        loadSession()
+    }
     func loadBillNumber(){
         //Load bill number
         billNumber = defaults.integer(forKey: "billNumber")
@@ -141,6 +156,7 @@ class ViewController: UIViewController {
         RestaurantLabel.text = restaurant
     }
     func updateImage()  {
+        
         if tipPercentage[tipPercentSegment.selectedSegmentIndex] < 0.1 {
             waiterImage.image = UIImage(named: "fire-jenkins")
         }else{
@@ -169,6 +185,43 @@ class ViewController: UIViewController {
 //            BillLabel.deleteBackward()
 //        }
         
+    }
+    func checkLeaveTime(){
+//        let appState = UIApplication.shared.applicationState.rawValue
+//        log.info("---check leave time")
+//        log.info(String(describing: appState))
+//        if appState == 0{
+//            let reopenTime = utilities.getTime()
+//            log.info("reopen time: \(reopenTime)")
+//            defaults.set(reopenTime, forKey: "TipCalculate.reopenTime")
+//
+//        }else if appState == 2{
+//            let inactiveTime = utilities.getTime()
+//            log.info("background time: \(inactiveTime)")
+//            defaults.set(inactiveTime, forKey: "TipCalculate.inactiveTime")
+//        }else{
+//        }
+//        
+        let activeTime = defaults.double(forKey: "TipCalculate.reopenTime") - defaults.double(forKey: "TipCalculate.inactiveTime")
+        log.info(String(activeTime))
+        if activeTime>1000 {
+            clearSession()
+            defaults.set("", forKey: "TipCalculate.reopenTime")
+            defaults.set("", forKey: "TipCalculate.inactiveTime")
+
+        }
+    }
+    func  appMoveToForeground() {
+        let reopenTime = utilities.getTime()
+        log.info("reopen time: \(reopenTime)")
+        defaults.set(reopenTime, forKey: "TipCalculate.reopenTime")
+        checkLeaveTime()
+    }
+    func appMoveToBackground() {
+        let inactiveTime = utilities.getTime()
+        log.info("background time: \(inactiveTime)")
+        defaults.set(inactiveTime, forKey: "TipCalculate.inactiveTime")
+
     }
 
 }
